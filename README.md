@@ -19,7 +19,10 @@ Built with React 18, TypeScript, Vite 6, Tailwind CSS 4, and Vitest.
 
 ## Getting started
 
-Requirements: Node.js ≥ 18 and npm.
+Requirements: Node.js `^22.22.2`, `^24.15.0`, or `>=26.0.0` and npm. (Vitest 4
+and jsdom 30 no longer support Node 18/20; Node 23/25 are not supported by the
+toolchain either. The built app itself runs in any modern browser — these
+requirements are only needed for development, tests, and builds.)
 
 ```bash
 # 1. Install dependencies
