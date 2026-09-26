@@ -1,0 +1,2 @@
+/* Fonts are loaded via <link> tags in index.html (preconnect + stylesheet)
+   instead of a CSS @import, which is serial and render-blocking. */

@@ -1,0 +1,36 @@
+{
+  "name": "poster-studio-app",
+  "version": "1.0.0",
+  "description": "Create social media posters with customizable templates, live previews, and quick PNG exports.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "clsx": "2.1.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "html-to-image": "^1.11.13",
+    "lucide-react": "0.487.0",
+    "sonner": "2.0.3",
+    "tailwind-merge": "3.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.1.12",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "4.7.0",
+    "jsdom": "^30.1.0",
+    "tailwindcss": "4.1.12",
+    "typescript": "^7.0.2",
+    "vite": "6.3.5",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

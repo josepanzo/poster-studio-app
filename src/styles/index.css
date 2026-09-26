@@ -1,0 +1,18 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+
+/* Poster Studio scrollbar styling */
+.poster-studio-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.poster-studio-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.poster-studio-scroll::-webkit-scrollbar-thumb {
+  background: #2a2a44;
+  border-radius: 3px;
+}
+.poster-studio-scroll::-webkit-scrollbar-thumb:hover {
+  background: #3a3a5e;
+}
