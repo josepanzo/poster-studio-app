@@ -1,0 +1,4 @@
+## 2023-10-24 - [CRITICAL] ReDoS Vulnerability in Schedule Parser
+**Vulnerability:** Regular Expression Denial of Service (ReDoS) inside `parseScheduleLine` in `src/app/utils/schedule.ts` through catastrophic backtracking using regex `/^(\S+)([\s·—–-]+)(.+)$/`.
+**Learning:** The overlap of match characters between `\S` (any non-whitespace) and `[\s·—–-]` (can also match characters like `-`) can lead to catastrophic backtracking (O(N^2) or worse) in cases where long consecutive strings contain these overlapping characters and fail to evaluate the rest of the string successfully.
+**Prevention:** Rather than adding complex, possessive-like matching rules (which Javascript Regex engine lacks native support for), or writing a brittle, mutually exclusive regular expression that may cause regressions with valid edge cases, input length validation (e.g. `line.length > 200`) provides robust mitigation for UI inputs where long lengths are nonsensical.

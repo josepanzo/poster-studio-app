@@ -23,6 +23,9 @@ const SEPARATOR_RE = /^\s*[·—–-]\s+/;
  * ordinary text.
  */
 export function parseScheduleLine(line: string): ScheduleRow | null {
+  // Prevent ReDoS by capping the line length (a schedule row shouldn't be long)
+  if (line.length > 200) return null;
+
   const trimmed = line.trim();
   if (!trimmed) return null;
 
