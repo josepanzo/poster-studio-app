@@ -33,10 +33,21 @@ export function BackgroundPicker({ background, onChange }: BackgroundPickerProps
   const handleFileUpload = useCallback(
     (file: File) => {
       setUploadError(null);
-      if (!file.type.startsWith('image/')) {
-        setUploadError('That file is not an image. Please choose a JPG, PNG, or WebP.');
+
+      // Security Enhancement: Prevent local DoS by limiting file size
+      const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+      if (file.size > MAX_FILE_SIZE) {
+        setUploadError('File is too large. Maximum size is 10MB.');
         return;
       }
+
+      // Security Enhancement: Explicit MIME type check prevents malicious SVG/XML uploads
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        setUploadError('Unsupported file type. Please choose a JPG, PNG, or WebP.');
+        return;
+      }
+
       readAndDownscaleImage(file)
         .then((dataUrl) => {
           onChange({
