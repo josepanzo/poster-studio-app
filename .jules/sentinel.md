@@ -1,0 +1,4 @@
+## 2025-02-28 - [Client-Side DoS and Malicious File Uploads]
+**Vulnerability:** Weak MIME type checking and missing file size limit allowed uploads of potentially malicious files (like SVGs with embedded scripts) and massive files causing local memory exhaustion.
+**Learning:** `file.type.startsWith('image/')` is insufficient validation because it allows SVG files, which can execute JavaScript when rendered in certain contexts, introducing XSS risks. Furthermore, processing massive image files entirely in the browser without size limits can cause memory exhaustion and crash the tab (local DoS).
+**Prevention:** Implement an explicit allowlist of safe image MIME types (e.g., `['image/jpeg', 'image/png', 'image/webp']`) and enforce a hard file size limit (e.g., 10MB) before attempting to read or process the file with `FileReader`.
