@@ -33,6 +33,14 @@ export function BackgroundPicker({ background, onChange }: BackgroundPickerProps
   const handleFileUpload = useCallback(
     (file: File) => {
       setUploadError(null);
+
+      // Security enhancement: Prevent client-side DoS by limiting file size to 10MB
+      const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+      if (file.size > MAX_FILE_SIZE) {
+        setUploadError('File is too large. Please select an image under 10MB.');
+        return;
+      }
+
       if (!file.type.startsWith('image/')) {
         setUploadError('That file is not an image. Please choose a JPG, PNG, or WebP.');
         return;
