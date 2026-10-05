@@ -1,0 +1,4 @@
+## 2023-10-27 - [Security Enhancement] Client-side DoS from large files and text inputs
+**Vulnerability:** The application was vulnerable to client-side Denial of Service (DoS) due to unbounded file uploads using `readAsDataURL` and unbounded text inputs. A user could upload a massive image or paste huge amounts of text, causing the browser to exhaust memory or freeze when attempting to process and render the data, and persisting large objects into IndexedDB/localStorage.
+**Learning:** Client-side processing of files and user inputs requires strict boundaries just like server-side processing. Even if data isn't sent to a backend, large inputs can crash the user's browser, ruining the UX and potentially being exploited locally.
+**Prevention:** Always enforce reasonable `maxLength` limits on `input` and `textarea` elements. Enforce strict `file.size` checks *before* calling memory-intensive APIs like `FileReader.readAsDataURL()`.
