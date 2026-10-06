@@ -33,7 +33,7 @@ export function BackgroundPicker({ background, onChange }: BackgroundPickerProps
   const handleFileUpload = useCallback(
     (file: File) => {
       setUploadError(null);
-      if (!file.type.startsWith('image/')) {
+      if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
         setUploadError('That file is not an image. Please choose a JPG, PNG, or WebP.');
         return;
       }
