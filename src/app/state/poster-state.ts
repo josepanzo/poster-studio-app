@@ -28,7 +28,7 @@ export interface BackgroundState {
    * @deprecated Legacy flat overlay opacity. Kept only so states saved
    * before the scrim system migrate; superseded by `scrim`.
    */
-  overlayOpacity: number;
+  overlayOpacity?: number;
   /** Directional scrim over uploaded images (default: bottom-weighted). */
   scrim: {
     style: ScrimStyle;
@@ -91,7 +91,6 @@ export const DEFAULT_STATE: PosterState = {
     presetId: 'texture-warm-noise',
     uploadedImage: null,
     focalPoint: { x: 0.5, y: 0.5 },
-    overlayOpacity: 0.4,
     scrim: { style: 'bottom', strength: 0.65 },
     saturation: 1,
   },
@@ -143,22 +142,25 @@ function normalizeParsed(parsed: Record<string, unknown>): Partial<PosterState> 
   }
   if (
     typeof parsed.background === 'object' &&
-    parsed.background !== null &&
-    typeof (parsed.background as BackgroundState).overlayOpacity === 'number'
+    parsed.background !== null
   ) {
-    const legacyOverlay = Math.min(0.7, Math.max(0, (parsed.background as BackgroundState).overlayOpacity));
     safe.background = {
       ...DEFAULT_STATE.background,
       ...(parsed.background as Partial<BackgroundState>),
     } as BackgroundState;
+
     // Migration: states saved before the scrim system only carry the legacy
     // flat overlayOpacity. Derive a scrim strength from it (flat overlay at
     // 0.4 ≈ bottom scrim at 0.65 of perceived darkness).
-    if (!safe.background.scrim) {
-      safe.background.scrim = {
-        style: 'bottom',
-        strength: Math.min(0.9, Math.round((legacyOverlay * 1.6 + 0.05) * 100) / 100),
-      };
+    if (typeof (parsed.background as BackgroundState).overlayOpacity === 'number') {
+      const legacyOverlay = Math.min(0.7, Math.max(0, (parsed.background as BackgroundState).overlayOpacity!));
+      if (!safe.background.scrim) {
+        safe.background.scrim = {
+          style: 'bottom',
+          strength: Math.min(0.9, Math.round((legacyOverlay * 1.6 + 0.05) * 100) / 100),
+        };
+      }
+      delete safe.background.overlayOpacity;
     }
   }
 
