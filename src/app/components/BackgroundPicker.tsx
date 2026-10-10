@@ -335,7 +335,7 @@ export function BackgroundPicker({ background, onChange }: BackgroundPickerProps
                       onChange({
                         ...background,
                         saturation: 0.7,
-                        overlayOpacity: 0.45,
+                        scrim: { ...background.scrim, strength: 0.77 },
                       })
                     }
                     className="text-[10px] transition-colors"
