@@ -33,7 +33,11 @@ export function BackgroundPicker({ background, onChange }: BackgroundPickerProps
   const handleFileUpload = useCallback(
     (file: File) => {
       setUploadError(null);
-      if (!file.type.startsWith('image/')) {
+
+      // Security: strict MIME type validation to prevent uploading malicious files
+      // like SVG (which could contain XSS payloads) since small images bypass canvas downscaling.
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
         setUploadError('That file is not an image. Please choose a JPG, PNG, or WebP.');
         return;
       }
