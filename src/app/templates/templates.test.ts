@@ -54,7 +54,12 @@ describe('template completeness', () => {
         }
         expect(zone.typography.fontWeight).toBeGreaterThanOrEqual(100);
         expect(zone.typography.fontWeight).toBeLessThanOrEqual(900);
-        expect(zone.typography.lineHeight).toBeGreaterThan(0);
+        for (const format of FORMAT_IDS) {
+          expect(
+            zone.typography.lineHeight[format],
+            `${template.id}/${role}/${format} lineHeight`
+          ).toBeGreaterThan(0);
+        }
         expect(zone.opacity).toBeGreaterThanOrEqual(0);
         expect(zone.opacity).toBeLessThanOrEqual(1);
         expect(zone.maxLines).toBeGreaterThanOrEqual(0);
@@ -89,6 +94,20 @@ describe('template completeness', () => {
       expect(pairing.headline.length).toBeGreaterThan(0);
       expect(pairing.body.length).toBeGreaterThan(0);
     }
+  });
+
+  it('keeps the approved announcement inspect values isolated to square', () => {
+    // Regression: the inspected reference (title 46.8667px/50px, body
+    // 23.2731px/32px at ~65% preview scale) converted to internal units
+    // must live only in the square column; story/landscape keep history.
+    const announcement = TEMPLATES['announcement'];
+    expect(announcement.zones.headline.typography.fontSize.square).toBe(72);
+    expect(announcement.zones.headline.typography.lineHeight.square).toBe(1.06);
+    expect(announcement.zones.body.typography.fontSize.square).toBe(35.75);
+    expect(announcement.zones.body.typography.lineHeight.square).toBe(1.375);
+    expect(announcement.zones.body.typography.lineHeight.story).toBe(1.55);
+    expect(announcement.zones.body.typography.lineHeight.landscape).toBe(1.55);
+    expect(announcement.zones.body.opacity).toBe(0.85);
   });
 
   it('has valid accent line config when enabled', () => {

@@ -9,7 +9,8 @@ export interface ZoneTypography {
   /** Font sizes keyed by format */
   fontSize: Record<FormatId, number>;
   fontWeight: number;
-  lineHeight: number;
+  /** Line-height ratios keyed by format (per-format so tuning one format never leaks into the others). */
+  lineHeight: Record<FormatId, number>;
   letterSpacing: number;
   textTransform: 'uppercase' | 'lowercase' | 'none';
 }

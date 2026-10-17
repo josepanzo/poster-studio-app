@@ -22,7 +22,7 @@ export const announcementTemplate: TemplateConfig = {
         fontFamily: 'body',
         fontSize: { square: 24, story: 26, landscape: 22 },
         fontWeight: 600,
-        lineHeight: 1.3,
+        lineHeight: { square: 1.3, story: 1.3, landscape: 1.3 },
         letterSpacing: 3,
         textTransform: 'uppercase',
       },
@@ -38,7 +38,7 @@ export const announcementTemplate: TemplateConfig = {
         fontFamily: 'headline',
         fontSize: { square: 72, story: 78, landscape: 64 },
         fontWeight: 700,
-        lineHeight: 1.06,
+        lineHeight: { square: 1.06, story: 1.06, landscape: 1.06 },
         letterSpacing: -1.5,
         textTransform: 'none',
       },
@@ -54,7 +54,7 @@ export const announcementTemplate: TemplateConfig = {
         fontFamily: 'headline',
         fontSize: { square: 34, story: 38, landscape: 32 },
         fontWeight: 500,
-        lineHeight: 1.25,
+        lineHeight: { square: 1.25, story: 1.25, landscape: 1.25 },
         letterSpacing: -0.5,
         textTransform: 'none',
       },
@@ -68,9 +68,14 @@ export const announcementTemplate: TemplateConfig = {
       role: 'body',
       typography: {
         fontFamily: 'body',
-        fontSize: { square: 25, story: 27, landscape: 23 },
+        // Square values reproduce the inspected reference (Inter 400,
+        // 23.2731px / 32px / 0 / 0.85 at ~65% preview scale): the preview
+        // multiplies every px by scaleFactor (~0.6509), so internal units
+        // are inspect / scale → 35.75px, ratio 1.375 (round(35.75·0.6509·1.375) = 32).
+        // Story/landscape keep their previous 1.55 ratio (lineHeight is per-format).
+        fontSize: { square: 35.75, story: 27, landscape: 23 },
         fontWeight: 400,
-        lineHeight: 1.55,
+        lineHeight: { square: 1.375, story: 1.55, landscape: 1.55 },
         letterSpacing: 0,
         textTransform: 'none',
       },
@@ -86,7 +91,7 @@ export const announcementTemplate: TemplateConfig = {
         fontFamily: 'body',
         fontSize: { square: 16, story: 18, landscape: 16 },
         fontWeight: 600,
-        lineHeight: 1.4,
+        lineHeight: { square: 1.4, story: 1.4, landscape: 1.4 },
         letterSpacing: 2.5,
         textTransform: 'uppercase',
       },

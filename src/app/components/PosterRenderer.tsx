@@ -118,7 +118,7 @@ export const PosterRenderer = React.forwardRef<HTMLDivElement, PosterRendererPro
       const typo = zone.typography;
       const fontSize = s(typo.fontSize[format]);
       const fontFamily = fontFor(typo.fontFamily);
-      const lineHeightPx = Math.round(fontSize * typo.lineHeight);
+      const lineHeightPx = Math.round(fontSize * typo.lineHeight[format]);
       const letterSpacing = s(typo.letterSpacing);
       const marginTop = s(zone.marginTop);
       const marginBottom = s(zone.marginBottom);
@@ -181,7 +181,7 @@ export const PosterRenderer = React.forwardRef<HTMLDivElement, PosterRendererPro
       const typo = zone.typography;
       const fontSize = s(typo.fontSize[format]);
       const fontFamily = fontFor(typo.fontFamily);
-      const lineHeightPx = Math.round(fontSize * typo.lineHeight);
+      const lineHeightPx = Math.round(fontSize * typo.lineHeight[format]);
       const marginTop = s(zone.marginTop);
       const marginBottom = s(zone.marginBottom);
 
