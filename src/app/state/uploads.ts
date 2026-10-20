@@ -73,6 +73,14 @@ const MAX_EDGE = 2160;
  */
 export function readAndDownscaleImage(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
+    // Security: Validate file type before processing to prevent malicious file uploads
+    // (e.g. SVG with embedded scripts or HTML files that could lead to XSS)
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      reject(new Error('Invalid file type. Only JPG, PNG, and WebP are allowed.'));
+      return;
+    }
+
     const reader = new FileReader();
     reader.onerror = () => reject(new Error('Could not read file'));
     reader.onload = () => {
