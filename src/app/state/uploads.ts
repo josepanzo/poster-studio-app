@@ -71,8 +71,14 @@ const MAX_EDGE = 2160;
  * re-render cost of multiple full-size PosterRenderers.
  * Returns null if the image cannot be decoded.
  */
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+
 export function readAndDownscaleImage(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
+    if (file.size > MAX_FILE_SIZE) {
+      return reject(new Error('File is too large. Maximum size is 10MB.'));
+    }
+
     const reader = new FileReader();
     reader.onerror = () => reject(new Error('Could not read file'));
     reader.onload = () => {
