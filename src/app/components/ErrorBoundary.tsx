@@ -22,7 +22,8 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
   }
 
   componentDidCatch(error: Error, info: React.ErrorInfo) {
-    console.error('Poster Studio crashed:', error, info.componentStack);
+    // SECURITY: Do not leak stack traces or component structure in logs
+    console.error('Poster Studio crashed: An unexpected error occurred.');
   }
 
   handleReset = () => {
@@ -52,12 +53,6 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
             Poster Studio hit an unexpected error and couldn't continue. Your last
             saved state may be damaged — you can reset the studio to start fresh.
           </p>
-          <pre
-            className="max-w-lg overflow-auto rounded-lg p-3 text-[11px]"
-            style={{ background: '#1e1e30', color: '#9090c0', maxHeight: '120px' }}
-          >
-            {this.state.error.message}
-          </pre>
           <button
             onClick={this.handleReset}
             className="rounded-xl px-5 py-2.5 text-[14px] text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366f1] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0c14]"
