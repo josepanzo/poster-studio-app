@@ -125,12 +125,12 @@ function normalizeParsed(parsed: Record<string, unknown>): Partial<PosterState> 
   }
 
   for (const key of ['title', 'subtitle', 'body', 'footer'] as const) {
-    if (typeof parsed[key] === 'string') safe[key] = parsed[key];
+    if (typeof parsed[key] === 'string') safe[key] = parsed[key].slice(0, 5000);
   }
   for (const key of ['subtitleEnabled', 'bodyEnabled', 'footerEnabled', 'grainEnabled', 'kickerEnabled', 'scheduleRowsEnabled'] as const) {
     if (typeof parsed[key] === 'boolean') safe[key] = parsed[key];
   }
-  if (typeof parsed.kicker === 'string') safe.kicker = parsed.kicker;
+  if (typeof parsed.kicker === 'string') safe.kicker = parsed.kicker.slice(0, 5000);
   if (typeof parsed.fontPairing === 'string' && isValidPairingId(parsed.fontPairing)) {
     safe.fontPairing = parsed.fontPairing;
   }
