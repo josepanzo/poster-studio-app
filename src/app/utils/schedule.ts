@@ -23,6 +23,10 @@ const SEPARATOR_RE = /^\s*[·—–-]\s+/;
  * ordinary text.
  */
 export function parseScheduleLine(line: string): ScheduleRow | null {
+  // Cap the input before the regex runs: no programme row is this long, and
+  // very long lines are exactly the ones that make backtracking expensive.
+  if (line.length > 200) return null;
+
   const trimmed = line.trim();
   if (!trimmed) return null;
 

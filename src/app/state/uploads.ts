@@ -60,6 +60,34 @@ export async function loadUploadedImage(): Promise<string | null> {
   }
 }
 
+// ─── Upload Validation ────────────────────────────────────────────────
+
+/** Image types the studio can decode and render as a poster background. */
+export const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'] as const;
+
+/** Largest single upload accepted, in bytes (10 MB). */
+export const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+const UNSUPPORTED_TYPE_MESSAGE =
+  'Tipo de ficheiro não suportado. Apenas imagens JPG, PNG e WebP são aceites.';
+const FILE_TOO_LARGE_MESSAGE = 'Ficheiro demasiado grande. O limite é 10 MB.';
+
+/**
+ * Validate an upload before any read or decode work happens.
+ * Returns the user-facing rejection message, or null when accepted.
+ * The declared type is checked first so an unsupported file always gets the
+ * type error, regardless of its size.
+ */
+export function validateUploadFile(file: File): string | null {
+  if (!(ALLOWED_IMAGE_TYPES as readonly string[]).includes(file.type)) {
+    return UNSUPPORTED_TYPE_MESSAGE;
+  }
+  if (file.size > MAX_FILE_SIZE) {
+    return FILE_TOO_LARGE_MESSAGE;
+  }
+  return null;
+}
+
 // ─── Image Downscale Guard ─────────────────────────────────────
 
 /** Longest edge accepted for an uploaded image; larger images are scaled down. */
@@ -73,12 +101,19 @@ const MAX_EDGE = 2160;
  */
 export function readAndDownscaleImage(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
+    const rejection = validateUploadFile(file);
+    if (rejection) {
+      reject(new Error(rejection));
+      return;
+    }
+
     const reader = new FileReader();
-    reader.onerror = () => reject(new Error('Could not read file'));
+    reader.onerror = () => reject(new Error('Não foi possível ler o ficheiro. Tente novamente.'));
     reader.onload = () => {
       const dataUrl = reader.result as string;
       const img = new Image();
-      img.onerror = () => reject(new Error('Could not decode image'));
+      img.onerror = () =>
+        reject(new Error('Não foi possível descodificar a imagem. O ficheiro pode estar corrompido.'));
       img.onload = () => {
         const longest = Math.max(img.width, img.height);
         if (longest <= MAX_EDGE) {
