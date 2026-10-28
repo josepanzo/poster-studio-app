@@ -51,6 +51,13 @@ describe('parseScheduleLine', () => {
     expect(parseScheduleLine('')).toBeNull();
     expect(parseScheduleLine('   ')).toBeNull();
   });
+
+  it('accepts a 200-character line and rejects one character more', () => {
+    const atLimit = `10h30 ${'a'.repeat(194)}`;
+    expect(atLimit).toHaveLength(200);
+    expect(parseScheduleLine(atLimit)).not.toBeNull();
+    expect(parseScheduleLine(`${atLimit}b`)).toBeNull();
+  });
 });
 
 describe('parseSchedule', () => {

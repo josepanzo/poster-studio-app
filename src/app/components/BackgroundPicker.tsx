@@ -33,10 +33,6 @@ export function BackgroundPicker({ background, onChange }: BackgroundPickerProps
   const handleFileUpload = useCallback(
     (file: File) => {
       setUploadError(null);
-      if (!file.type.startsWith('image/')) {
-        setUploadError('That file is not an image. Please choose a JPG, PNG, or WebP.');
-        return;
-      }
       readAndDownscaleImage(file)
         .then((dataUrl) => {
           onChange({
@@ -47,8 +43,12 @@ export function BackgroundPicker({ background, onChange }: BackgroundPickerProps
           });
           setActiveTab('upload');
         })
-        .catch(() => {
-          setUploadError('That image could not be loaded. Please try a different file.');
+        .catch((error: unknown) => {
+          setUploadError(
+            error instanceof Error && error.message
+              ? error.message
+              : 'Não foi possível carregar a imagem. Tente um ficheiro diferente.'
+          );
         });
     },
     [background, onChange]
@@ -199,7 +199,7 @@ export function BackgroundPicker({ background, onChange }: BackgroundPickerProps
               <span className="text-[13px] text-[#9090c0]">
                 Drop image or <span className="text-[#8b8bff]" style={{ textDecoration: 'underline' }}>browse</span>
               </span>
-              <span className="text-[11px] text-[#9090c0]">JPG, PNG</span>
+              <span className="text-[11px] text-[#9090c0]">JPG, PNG e WebP</span>
               <input
                 ref={fileInputRef}
                 type="file"
