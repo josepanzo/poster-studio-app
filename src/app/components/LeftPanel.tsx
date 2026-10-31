@@ -87,8 +87,10 @@ export function LeftPanel({ state, onChange, onExport, isExporting, isSaved, onC
           <label className="block mb-1.5 text-[13px] text-[#a0a0b8]" style={{ fontWeight: 500 }} htmlFor="poster-title">
             Title <span className="text-[#6366f1]">*</span>
           </label>
+          {/* Security: Prevent excessively large text inputs (DoS/storage limits) */}
           <textarea
             id="poster-title"
+            maxLength={150}
             value={state.title}
             onChange={(e) => update('title', e.target.value)}
             placeholder="Enter your headline..."
@@ -112,6 +114,7 @@ export function LeftPanel({ state, onChange, onExport, isExporting, isSaved, onC
           {state.kickerEnabled && (
             <input
               id="poster-kicker"
+              maxLength={50}
               value={state.kicker}
               onChange={(e) => update('kicker', e.target.value)}
               placeholder="3 de Maio · Jardim do Túmulo"
@@ -135,6 +138,7 @@ export function LeftPanel({ state, onChange, onExport, isExporting, isSaved, onC
           {state.subtitleEnabled && (
             <input
               id="poster-subtitle"
+              maxLength={100}
               value={state.subtitle}
               onChange={(e) => update('subtitle', e.target.value)}
               placeholder="A punchy subtitle..."
@@ -158,6 +162,7 @@ export function LeftPanel({ state, onChange, onExport, isExporting, isSaved, onC
           {state.bodyEnabled && (
             <textarea
               id="poster-body"
+              maxLength={500}
               value={state.body}
               onChange={(e) => update('body', e.target.value)}
               placeholder={"Supporting text…\n\nTip: lines like “10h30 Cebracao” render as schedule rows."}
@@ -197,6 +202,7 @@ export function LeftPanel({ state, onChange, onExport, isExporting, isSaved, onC
           {state.footerEnabled && (
             <input
               id="poster-footer"
+              maxLength={100}
               value={state.footer}
               onChange={(e) => update('footer', e.target.value)}
               placeholder="@handle  |  website.com"
