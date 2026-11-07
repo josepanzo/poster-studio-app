@@ -91,6 +91,7 @@ export function LeftPanel({ state, onChange, onExport, isExporting, isSaved, onC
             id="poster-title"
             value={state.title}
             onChange={(e) => update('title', e.target.value)}
+            maxLength={200}
             placeholder="Enter your headline..."
             rows={3}
             className="w-full rounded-lg border-none px-3 py-2.5 text-[14px] text-white placeholder-[#404058] resize-none focus:outline-none focus:ring-1 focus:ring-[#6366f1]"
@@ -114,6 +115,7 @@ export function LeftPanel({ state, onChange, onExport, isExporting, isSaved, onC
               id="poster-kicker"
               value={state.kicker}
               onChange={(e) => update('kicker', e.target.value)}
+              maxLength={100}
               placeholder="3 de Maio · Jardim do Túmulo"
               className="w-full rounded-lg border-none px-3 py-2.5 text-[14px] text-white placeholder-[#404058] focus:outline-none focus:ring-1 focus:ring-[#6366f1]"
               style={{ background: '#1e1e30', fontFamily: "'Inter', sans-serif", fontWeight: 400, lineHeight: 1.5 }}
@@ -137,6 +139,7 @@ export function LeftPanel({ state, onChange, onExport, isExporting, isSaved, onC
               id="poster-subtitle"
               value={state.subtitle}
               onChange={(e) => update('subtitle', e.target.value)}
+              maxLength={200}
               placeholder="A punchy subtitle..."
               className="w-full rounded-lg border-none px-3 py-2.5 text-[14px] text-white placeholder-[#404058] focus:outline-none focus:ring-1 focus:ring-[#6366f1]"
               style={{ background: '#1e1e30', fontFamily: "'Inter', sans-serif", fontWeight: 400, lineHeight: 1.5 }}
@@ -160,6 +163,7 @@ export function LeftPanel({ state, onChange, onExport, isExporting, isSaved, onC
               id="poster-body"
               value={state.body}
               onChange={(e) => update('body', e.target.value)}
+              maxLength={1000}
               placeholder={"Supporting text…\n\nTip: lines like “10h30 Cebracao” render as schedule rows."}
               rows={3}
               className="w-full rounded-lg border-none px-3 py-2.5 text-[14px] text-white placeholder-[#404058] resize-none focus:outline-none focus:ring-1 focus:ring-[#6366f1]"
@@ -199,6 +203,7 @@ export function LeftPanel({ state, onChange, onExport, isExporting, isSaved, onC
               id="poster-footer"
               value={state.footer}
               onChange={(e) => update('footer', e.target.value)}
+              maxLength={100}
               placeholder="@handle  |  website.com"
               className="w-full rounded-lg border-none px-3 py-2.5 text-[14px] text-white placeholder-[#404058] focus:outline-none focus:ring-1 focus:ring-[#6366f1]"
               style={{ background: '#1e1e30', fontFamily: "'Inter', sans-serif", fontWeight: 400, lineHeight: 1.5 }}
