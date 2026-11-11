@@ -87,12 +87,14 @@ export function LeftPanel({ state, onChange, onExport, isExporting, isSaved, onC
           <label className="block mb-1.5 text-[13px] text-[#a0a0b8]" style={{ fontWeight: 500 }} htmlFor="poster-title">
             Title <span className="text-[#6366f1]">*</span>
           </label>
+          {/* Security: Prevent client-side memory bloat (DoS risk) via unbounded text input. */}
           <textarea
             id="poster-title"
             value={state.title}
             onChange={(e) => update('title', e.target.value)}
             placeholder="Enter your headline..."
             rows={3}
+            maxLength={200}
             className="w-full rounded-lg border-none px-3 py-2.5 text-[14px] text-white placeholder-[#404058] resize-none focus:outline-none focus:ring-1 focus:ring-[#6366f1]"
             style={{ background: '#1e1e30', fontFamily: "'Inter', sans-serif", fontWeight: 400, lineHeight: 1.5 }}
           />
@@ -110,11 +112,13 @@ export function LeftPanel({ state, onChange, onExport, isExporting, isSaved, onC
             />
           </div>
           {state.kickerEnabled && (
+            // Security: Prevent client-side memory bloat (DoS risk) via unbounded text input.
             <input
               id="poster-kicker"
               value={state.kicker}
               onChange={(e) => update('kicker', e.target.value)}
               placeholder="3 de Maio · Jardim do Túmulo"
+              maxLength={100}
               className="w-full rounded-lg border-none px-3 py-2.5 text-[14px] text-white placeholder-[#404058] focus:outline-none focus:ring-1 focus:ring-[#6366f1]"
               style={{ background: '#1e1e30', fontFamily: "'Inter', sans-serif", fontWeight: 400, lineHeight: 1.5 }}
             />
@@ -133,11 +137,13 @@ export function LeftPanel({ state, onChange, onExport, isExporting, isSaved, onC
             />
           </div>
           {state.subtitleEnabled && (
+            // Security: Prevent client-side memory bloat (DoS risk) via unbounded text input.
             <input
               id="poster-subtitle"
               value={state.subtitle}
               onChange={(e) => update('subtitle', e.target.value)}
               placeholder="A punchy subtitle..."
+              maxLength={200}
               className="w-full rounded-lg border-none px-3 py-2.5 text-[14px] text-white placeholder-[#404058] focus:outline-none focus:ring-1 focus:ring-[#6366f1]"
               style={{ background: '#1e1e30', fontFamily: "'Inter', sans-serif", fontWeight: 400, lineHeight: 1.5 }}
             />
@@ -156,12 +162,14 @@ export function LeftPanel({ state, onChange, onExport, isExporting, isSaved, onC
             />
           </div>
           {state.bodyEnabled && (
+            // Security: Prevent client-side memory bloat (DoS risk) via unbounded text input.
             <textarea
               id="poster-body"
               value={state.body}
               onChange={(e) => update('body', e.target.value)}
               placeholder={"Supporting text…\n\nTip: lines like “10h30 Cebracao” render as schedule rows."}
               rows={3}
+              maxLength={1000}
               className="w-full rounded-lg border-none px-3 py-2.5 text-[14px] text-white placeholder-[#404058] resize-none focus:outline-none focus:ring-1 focus:ring-[#6366f1]"
               style={{ background: '#1e1e30', fontFamily: "'Inter', sans-serif", fontWeight: 400, lineHeight: 1.5 }}
             />
@@ -195,11 +203,13 @@ export function LeftPanel({ state, onChange, onExport, isExporting, isSaved, onC
             />
           </div>
           {state.footerEnabled && (
+            // Security: Prevent client-side memory bloat (DoS risk) via unbounded text input.
             <input
               id="poster-footer"
               value={state.footer}
               onChange={(e) => update('footer', e.target.value)}
               placeholder="@handle  |  website.com"
+              maxLength={200}
               className="w-full rounded-lg border-none px-3 py-2.5 text-[14px] text-white placeholder-[#404058] focus:outline-none focus:ring-1 focus:ring-[#6366f1]"
               style={{ background: '#1e1e30', fontFamily: "'Inter', sans-serif", fontWeight: 400, lineHeight: 1.5 }}
             />
